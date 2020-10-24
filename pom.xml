@@ -12,7 +12,14 @@
 	<artifactId>school</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>school</name>
+	<packaging>pom</packaging>
 	<description>tool for teacher</description>
+
+	<modules>
+		<module>core</module>
+		<module>repo</module>
+		<module>web</module>
+	</modules>
 
 	<properties>
 		<java.version>11</java.version>
