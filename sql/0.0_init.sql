@@ -21,6 +21,14 @@ create table `role` (
  KEY `idx_role` (`role`)
 ) ENGINE=InnoDB CHARSET=utf8mb4 COMMENT '角色';
 
+create table `user_role` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `userId` int(11) NOT NULL COMMENT '用户id',
+ `roleId` int(11) NOT NULL COMMENT '角色id',
+ PRIMARY KEY (`id`),
+ KEY `idx_userId` (`userId`)
+) ENGINE=InnoDB CHARSET=utf8mb4 COMMENT '用户角色';
+
 create table `school` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `name` varchar(50) NOT NULL COMMENT '校名',
@@ -83,6 +91,7 @@ create table `student` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `name` varchar(20) NOT NULL COMMENT '姓名',
  `gender` tinyint(1) DEFAULT 0 COMMENT '性别',
+ `code`    varchar(20) DEFAULT NULL COMMENT '学号/编号',
  `classId` int(11) NOT NULL COMMENT '班级id',
  `del` tinyint(1) DEFAULT 0 COMMENT '是否删除',
  `createTime` datetime DEFAULT CURRENT_TIMESTAMP,

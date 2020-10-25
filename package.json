@@ -1,0 +1,23 @@
+{
+  "name": "adoujia-school",
+  "version": "1.0.0",
+  "description": "start back server by docker conviniently",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "./mvnw clean package -DskipTests=true",
+    "db:up": "docker-compose -f docker-compose.yml up -d --force-recreate --build",
+    "db:down": "docker-compose -f docker-compose.yml down -v",
+    "db:restart": "npm run db:down && npm run db:up",
+    "db:debug": "npm run db:down && docker-compose -f docker-compose.yml up --force-recreate --build > db.debug",
+    "admin:up": "docker-compose -f docker-compose.yml -f docker-compose.admin.yml up -d --force-recreate --build",
+    "admin:down": "docker-compose -f docker-compose.yml -f docker-compose.admin.yml down -v",
+    "web:up": "docker-compose -f docker-compose.yml -f docker-compose.web.yml up -d --force-recreate --build",
+    "web:down": "docker-compose -f docker-compose.yml -f docker-compose.web.yml down -v",
+    "deploy:yunxin": "cd yunxin &&  ./buildImage-onlinetest.sh"
+  },
+  "author": "fangcheng/kq6441",
+  "license": "ISC"
+}
