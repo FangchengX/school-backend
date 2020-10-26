@@ -60,4 +60,14 @@ public class RedisService {
         RBucket<Object> bucket = redissonClient.getBucket(key);
         return bucket.isExists();
     }
+
+    /**
+     * delete key
+     *
+     * @param key key
+     */
+    public void delete(String key) {
+        RBucket<Object> bucket = redissonClient.getBucket(key);
+        bucket.delete();
+    }
 }

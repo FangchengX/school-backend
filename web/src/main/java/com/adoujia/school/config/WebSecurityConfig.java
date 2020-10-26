@@ -9,11 +9,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * WebSecurity配置
@@ -23,6 +24,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
  */
 @Slf4j
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -60,17 +62,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
-
                     //鉴权所需的Filter
-                    //使用session获得用户信息
                     .addFilterBefore(schoolAuthenticationFilter,
-                            BasicAuthenticationFilter.class)
+                        UsernamePasswordAuthenticationFilter.class)
                     //让请求body可以读两次
                     //读取body进行摘要校验
                     //允许跨域，参考CorsConfig
                     .cors()
                     .and()
-
                     // 用户未验证通过的响应
                     .exceptionHandling()
                     .authenticationEntryPoint(myAuthenticationEntryPoint)

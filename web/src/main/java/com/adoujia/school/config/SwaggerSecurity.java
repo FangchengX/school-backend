@@ -1,13 +1,12 @@
 package com.adoujia.school.config;
 
-import com.adoujia.school.config.security.GrantedRole;
-import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,6 +27,7 @@ import org.springframework.stereotype.Component;
  */
 @Configuration
 @Order(1)
+@Profile({"local", "onlinetest"})
 public class SwaggerSecurity extends WebSecurityConfigurerAdapter {
 
     static final String[] antPatterns = {
@@ -54,12 +54,12 @@ public class SwaggerSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .requestMatchers()
-                .antMatchers(antPatterns)
-                .and()
-                .authorizeRequests()
-                .anyRequest()
-                .hasRole("SWAGGER")
+            .requestMatchers()
+            .antMatchers(antPatterns)
+            .and()
+            .authorizeRequests()
+            .anyRequest()
+            .permitAll()
                 .and()
                 .httpBasic();
     }
@@ -74,30 +74,13 @@ public class SwaggerSecurity extends WebSecurityConfigurerAdapter {
 
         @Override
         public Authentication authenticate(Authentication authentication) {
-            UsernamePasswordAuthenticationToken token =
-                    ((UsernamePasswordAuthenticationToken) authentication);
-            if (checkSwaggerPassword(token)) {
-                return new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
-                        authentication.getCredentials(),
-                        Lists.newArrayList(new GrantedRole("ROLE_SWAGGER")));
-            }
             return authentication;
-        }
-
-        private boolean checkSwaggerPassword(UsernamePasswordAuthenticationToken token) {
-            if (token.getPrincipal() == null || token.getCredentials() == null) {
-                return false;
-            }
-            return "swagger".equals(token.getPrincipal().toString())
-                    && "todayisagoodday".equals(token.getCredentials().toString());
         }
 
         @Override
         public boolean supports(Class<?> authentication) {
             return UsernamePasswordAuthenticationToken.class == authentication;
         }
-
-
     }
 }
 

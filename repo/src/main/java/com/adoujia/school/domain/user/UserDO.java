@@ -27,7 +27,7 @@ public class UserDO {
     String account;
     String name;
     String avatar;
-    String gender;
+    Integer gender;
     String phone;
     String password;
     Integer del;
