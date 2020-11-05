@@ -1,5 +1,7 @@
 package com.adoujia.school.service;
 
+import com.adoujia.school.repo.construct.ClazzRepo;
+import com.adoujia.school.repo.construct.StudentRepo;
 import com.adoujia.school.repo.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,4 +14,8 @@ public class BaseService {
     protected UserRepo userRepo;
     @Autowired
     protected RedisService redisService;
+    @Autowired
+    protected ClazzRepo clazzRepo;
+    @Autowired
+    protected StudentRepo studentRepo;
 }

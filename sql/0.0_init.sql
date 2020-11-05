@@ -44,6 +44,7 @@ create table `school` (
 create table `class` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `name` varchar(20) NOT NULL COMMENT '班级名',
+ `schoolId` int(11) NOT NULL COMMENT '学校id',
  `del` tinyint(1) DEFAULT 0 COMMENT '是否删除',
  `createTime` datetime DEFAULT CURRENT_TIMESTAMP,
  `updateTime` datetime DEFAULT CURRENT_TIMESTAMP,
